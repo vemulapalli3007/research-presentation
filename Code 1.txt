@@ -1,0 +1,94 @@
+﻿<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    .bar {
+      fill: #1ca2ce;
+    }
+    .bar:hover {
+      fill: #e55d19;
+    }
+    #heading {
+      padding-left: 600px;
+    }
+  </style>
+</head>
+
+<body>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <h2 id=heading> Alcohol in Popular Beers  </h2>
+  <svg width="1260" height="600"></svg>
+  <script>
+    var svg = d3.select("svg"),
+      margin = { top: 40, right: 25, bottom: 25, left: 60 },
+      width = +svg.attr("width") - margin.left - margin.right,
+      height = +svg.attr("height") - margin.top - margin.bottom;
+    /* 
+              Band scaling function for x-axis can be created and the range is from 0.
+              Linear scaling function for y-axis is created and the range starts from 0.*/
+    var x = d3
+        .scaleBand()
+        .rangeRound([0, width])
+        .padding(0.1),
+      y = d3.scaleLinear().rangeRound([height, 0]);
+    
+    /* code appends an SVG Group Element, then group element is translated by the height */
+    
+    var g = svg
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    /* d3.tsv contains the data that need to be dispalyed in form of bar chart. tsv means tab separated values */
+    
+    d3.tsv(
+      "data.tsv",
+      function(d) {
+        d.percentage = +d.percentage; /* Converts a string to number */
+        return d;
+      },
+      function(error, data) {
+        if (error) throw error;
+        x.domain(
+          data.map(function(d) {
+            return d.beer name;
+          })
+        ); /* domain for the x scale */
+        y.domain([
+          0,
+          d3.max(data, function(d) {
+            return d.percentage;
+          })
+        ]); /* domian for y scale */
+        g
+          .append("g") /* code appends svg group and holds x-axis */
+          .attr("class", "x-axis")
+          .attr("transform", "translate(0," + height + ")")
+          .call(d3.axisBottom(x));
+    
+        g
+          .append("g") /* code appends svg group and holds y-axis*/
+          .attr("class", "y-axis")
+          .call(d3.axisLeft(y).ticks(10, "%"));
+    
+        /* D3 code to draw bar graph for the data */
+        g
+          .selectAll(".bar")
+          .data(data)
+          .enter()
+          .append("rect")
+          .attr("class", "bar")
+          .attr("x", function(d) {
+            return x(d.beer name);
+          })
+          .attr("y", function(d) {
+            return y(d.percentage);
+          })
+          .attr("width", x.bandwidth())
+          .attr("height", function(d) {
+            return height - y(d.percentage);
+          });
+      }
+    );
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,15 @@
+Beer name	Percentage
+Miller 64	2.8
+Bud Light	4.1
+Beck's	5
+Samuel Adams Pale Ale	5.3
+Heineken	5.4
+Sierra Nevada Pale Ale	5.7
+Keystone Ice	5.9
+Bud Light Platinum	6
+Redhook IPA	6.4
+Sierra Nevada Torpedo	7.2
+Bud Lime-a-Rita	8
+Icehouse Edge	8
+Four Loko	12
+Stack High Gravity	12
